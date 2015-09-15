@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{87514C7C-56A4-40BA-8D30-7C95ADF95016}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>cduckcs</RootNamespace>
+    <AssemblyName>cduckcs</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Sitemaps">
+      <HintPath>..\Lib\SiteMap\Bin\Newtonsoft.Sitemaps.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="About.aspx" />
+    <Content Include="Clients.aspx" />
+    <Content Include="Contact.aspx" />
+    <Content Include="google1e900c5e380dd4de.html" />
+    <Content Include="Images\aboutPageImg.png" />
+    <Content Include="Images\bottomPatternDark.png" />
+    <Content Include="Images\bottomPatternLight.png" />
+    <Content Include="Images\breadcrumbsBG.png" />
+    <Content Include="Images\btnNext.png" />
+    <Content Include="Images\btnPrev.png" />
+    <Content Include="Images\bulletPoint.png" />
+    <Content Include="Images\clientListBG.png" />
+    <Content Include="Images\clients\epnotice.png" />
+    <Content Include="Images\clients\GodavariFoundation.jpg" />
+    <Content Include="Images\clients\indraniLogo.gif" />
+    <Content Include="Images\clients\learnfromall.png" />
+    <Content Include="Images\clients\tulsi_extrusions.jpg" />
+    <Content Include="Images\col1BG.png" />
+    <Content Include="Images\col2BG.png" />
+    <Content Include="Images\col3BG.png" />
+    <Content Include="Images\contactPageImg.png" />
+    <Content Include="Images\darkButtonImg.png" />
+    <Content Include="Images\darkButtonOut.png" />
+    <Content Include="Images\darkButtonOver.png" />
+    <Content Include="Images\darkInputPattern.png" />
+    <Content Include="Images\galleryBoxShadow.png" />
+    <Content Include="Images\greyLogo.png" />
+    <Content Include="Images\icon3b.png" />
+    <Content Include="Images\lightInputBG.png" />
+    <Content Include="Images\lightTextareaBG.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\menuBG.png" />
+    <Content Include="Images\menuSep.png" />
+    <Content Include="Images\products\hrms.png" />
+    <Content Include="Images\products\loyalty.png" />
+    <Content Include="Images\products\quizy.jpg" />
+    <Content Include="Images\products\vechical.png" />
+    <Content Include="Images\quote.png" />
+    <Content Include="Images\redBulletPoint.png" />
+    <Content Include="Images\redButtonImg.png" />
+    <Content Include="Images\redButtonOut.png" />
+    <Content Include="Images\redButtonOver.png" />
+    <Content Include="Images\separatorBG.png" />
+    <Content Include="Images\service1BW.png" />
+    <Content Include="Images\service2BW.png" />
+    <Content Include="Images\service3BW.png" />
+    <Content Include="Images\serviceImg1.png" />
+    <Content Include="Images\serviceImg2.png" />
+    <Content Include="Images\serviceImg3.png" />
+    <Content Include="Images\servicesPageImg.png" />
+    <Content Include="Images\sidebarGradBG.png" />
+    <Content Include="Images\sidebarHeaderBG.png" />
+    <Content Include="Images\sidebarPointDark.png" />
+    <Content Include="Images\sidebarPointRed.png" />
+    <Content Include="Images\sliderBG.png" />
+    <Content Include="Images\sliderImg1.png" />
+    <Content Include="Images\social\facebook.png" />
+    <Content Include="Images\social\facebookOver.png" />
+    <Content Include="Images\social\rss.png" />
+    <Content Include="Images\social\rssOver.png" />
+    <Content Include="Images\social\twitter.png" />
+    <Content Include="Images\social\twitterOver.png" />
+    <Content Include="Images\topBG.png" />
+    <Content Include="Images\topBGPattern.png" />
+    <Content Include="Images\topPaperShadow.png" />
+    <Content Include="Images\website-development-icon.jpg" />
+    <Content Include="Products.aspx" />
+    <Content Include="robots.txt" />
+    <Content Include="Scripts\Aller_400.font.js" />
+    <Content Include="Scripts\cduckfunc.js" />
+    <Content Include="Scripts\css_browser_select.js" />
+    <Content Include="Scripts\cufon.js" />
+    <Content Include="Scripts\functions.js" />
+    <Content Include="Scripts\jCarouselLite.js" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\json2.js" />
+    <Content Include="Services.aspx" />
+    <Content Include="Styles\master.css" />
+    <Content Include="Styles\reset.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="webservice\service.asmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Clients.aspx.cs">
+      <DependentUpon>Clients.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Clients.aspx.designer.cs">
+      <DependentUpon>Clients.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Home.Master.cs">
+      <DependentUpon>Home.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.Master.designer.cs">
+      <DependentUpon>Home.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Products.aspx.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Products.aspx.designer.cs">
+      <DependentUpon>Products.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services.aspx.cs">
+      <DependentUpon>Services.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services.aspx.designer.cs">
+      <DependentUpon>Services.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="webservice\service.asmx.cs">
+      <DependentUpon>service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Site.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.sitemap" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Home.Master" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49615</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

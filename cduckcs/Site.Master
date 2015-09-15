@@ -1,0 +1,216 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="cduckcs.SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>
+        <%=PageTitle %></title>
+    <meta name="author" content="C-DUCK CONSULTANCY SERVICES">
+    <meta name="description" content="C-DUCK do AGILE software development which brings accelerated delivery. C-DUCK strongly believe in our cross function teams which delivers values to our clients in time boxed manner. C-DUCK cater HRMS, QUIZ ENGINE and Loyalty Solutions.">
+    <meta name="keywords" content="HRMS, HRIS, ERIS, Human Resources, Recruitment, Training, Quiz, Test, USA, India, America, Mauritius, United Kingdom">
+    <meta name="abstract" content="Business Analysis Consulting, Software Services, Business Processing Services and HR Solutions" />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <script src="Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="Scripts/json2.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="Styles/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="Styles/master.css" type="text/css" media="screen" />
+    <script src="Scripts/cduckfunc.js" type="text/javascript"></script>
+    <!-- Include the Cufon files -->
+    <script src="Scripts/cufon.js" type="text/javascript"></script>
+    <script src="Scripts/Aller_400.font.js" type="text/javascript"></script>
+    <!-- CSS Browser Compatibility -->
+    <script src="Scripts/css_browser_select.js" type="text/javascript"></script>
+    <!-- Initialize Cufon -->
+    <script type="text/javascript">
+        Cufon.replace('h1, h2, h3');
+        Cufon.replace('ul#nav li a', { hover: true });
+        Cufon.replace('blockquote p');
+
+        Cufon.replace('#mainSlider h3, .sliderParagraph');
+
+        Cufon.replace('a.darkButton, a.redButton');
+
+        Cufon.replace('form#contactForm label');
+    </script>
+    <!-- Include jQuery -->
+    <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript"></script>--%>
+    <%--<script src="Scripts/functions.js" type="text/javascript"></script>--%>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-24520053-1']);
+        _gaq.push(['_setDomainName', '.c-duck.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <!-- Logo & Contact Info -->
+    <div id="topContainer">
+        <div class="centerContainer">
+            <a href="default.aspx" title="C-DUCK CONSULTANCY SERVICES" class="logo fl">
+                <img src="Images/logo.png" alt="C-DUCK Logo" /></a>
+            <div id="contactInformationTop" class="fr">
+                <ul>
+                    <li>
+                        <p>
+                            Phone: <span>+91 20 26055100</span></p>
+                    </li>
+                    <li>
+                        <p>
+                            Email: <a href="mailto:info@c-duck.com" title="Send us a message">info@c-duck.com</a></p>
+                    </li>
+                    <li class="noBottomBorder">
+                        <p class="fl">
+                            Follow Us:</p>
+                        <!-- Social icons -->
+                        <ul class="fl" id="socialBW">
+                            <li><a href="http://www.twitter.com/cduckcs" title="Follow us on Twitter" target="_blank">
+                                <img src="Images/social/twitter.png" alt="Follow us on Twitter" /></a></li>
+                            <li><a href="http://www.facebook.com/pages/CDUCK-CONSULTANCY-SERVICES/140307069370283"
+                                title="Follow us on Facebook" target="_blank">
+                                <img src="Images/social/facebook.png" alt="Follow us on Facebook" /></a></li>
+                            <li><a href="#" title="Follow us on RSS">
+                                <img src="Images/social/rss.png" alt="Follow us on RSS" /></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- end contactInformationTop -->
+        </div>
+        <!-- end centerContainer -->
+    </div>
+    <!-- end topContainer -->
+    <!-- Menu Container -->
+    <div id="menuContainer">
+        <div class="centerContainer">
+            <ul id="nav">
+                <li><a href="default.aspx" title="Home">Home<span>go to start</span></a></li>
+                <li><a href="services.aspx" title="Services">Services<span>our works</span></a></li>
+                <li><a href="products.aspx" title="Gallery">Products<span>our babies</span></a></li>
+                <li><a href="clients.aspx" title="Our Clients">Our Clients<span>what we've done for
+                    others</span></a></li>
+                <li><a href="about.aspx" title="About Us">About Us<span>who we are</span></a></li>
+                <li><a href="contact.aspx" title="Contact Us">Contact Us<span>Talk to us</span></a></li>
+            </ul>
+        </div>
+        <!-- end centerContainer -->
+    </div>
+    <!-- end menuContainer -->
+    <!-- Slider Container -->
+    <asp:ContentPlaceHolder ID="SliderContainer" runat="server">
+        <div id="breadcrumbsContainer">
+            <div class="centerContainer">
+                <p>
+                    You are here:
+                    <asp:SiteMapPath ID="Breadcrumb" runat="server" ShowToolTips="true" Font-Bold="true"
+                        PathSeparator=" / " />
+                </p>
+            </div>
+            <!-- end centerContainer -->
+        </div>
+        <!-- end breadcrumbsContainer -->
+        <div class="blankSeparator">
+            <!-- -->
+        </div>
+    </asp:ContentPlaceHolder>
+    <!-- Sidebar Container -->
+    <!-- center Container -->
+    <div class="centerContainer">
+        <!-- sidebarContainer -->
+        <div class="sidebarContainer fl">
+            <asp:ContentPlaceHolder ID="SideBarContainer" runat="server" />
+        </div>
+        <!-- end sidebarContainer -->
+        <!-- Page Container -->
+        <div id="pageContent" class="fr">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+        <!-- end pageContent -->
+    </div>
+    <!-- end centerContainer -->
+    <div class="blankSeparator">
+        <!-- -->
+    </div>
+    <!-- Footer Container -->
+    <div id="footerContainer">
+        <div class="centerContainer">
+            <div class="oneThirdCol">
+                <h3>
+                    <div id="fb-root">
+                    </div>
+                    <script src="http://connect.facebook.net/en_US/all.js#xfbml=1" type="text/javascript"></script>
+                    <fb:like-box href="http://www.facebook.com/pages/CDUCK-CONSULTANCY-SERVICES/140307069370283"
+                        width="292" show_faces="true" border_color="#0066FF" stream="false" header="false"></fb:like-box>
+            </div>
+            <!-- end oneThirdCol -->
+            <div class="oneThirdCol">
+                <h3>
+                    subscribe to our newsletter</h3>
+                <p>
+                    Enter your email address below to subscribe. You will receive our newsletter once
+                    a week.</p>
+                <form action="" method="post" id="subscribeForm">
+                <fieldset>
+                    <div>
+                        <input type="text" id="newsletterEmailAddress" class="fl" />
+                        <a href="#" id="newsletterSignup" class="redButton" onclick="SendEmailSignUp();">
+                            <img src="Images/redButtonImg.png" alt="Subscribe" /></a>
+                    </div>
+                </fieldset>
+                </form>
+                <p>
+                    <a href="#" title="Terms of Use">Terms of Use</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a href="#"
+                        title="Privacy Policy">Privacy Policy</a>
+                </p>
+            </div>
+            <!-- end oneThirdCol -->
+            <div class="oneThirdCol lastCol">
+                <h3>
+                    talk to us</h3>
+                <p>
+                    You can contact us by using the contact information below or by sending us a message
+                    via our <a href="#" title="Go to contact page">contact form</a>.</p>
+                <ul id="contactInfoList">
+                    <li>Pune, India</li>
+                    <li>Phone: +91 20 26055100</li>
+                    <li>Email: <a href="#" title="Email Us">info@c-duck.com</a></li>
+                </ul>
+            </div>
+            <!-- end oneThirdCol -->
+        </div>
+        <!-- end centerContainer -->
+    </div>
+    <!-- end footerContainer -->
+    <!-- Footer Copyright Container -->
+    <div id="footerCopyrightContainer">
+        <div class="centerContainer">
+            <p class="fl">
+                &copy; Copyright 2012 cduck consultancy services. All rights reserved.</p>
+            <ul class="fr">
+                <li><a href="http://www.twitter.com/cduckcs" title="Follow us on Twitter">
+                    <img src="Images/social/twitter.png" alt="Follow us on Twitter" /></a></li>
+                <li><a href="http://www.facebook.com/pages/CDUCK-CONSULTANCY-SERVICES/140307069370283"
+                    title="Follow us on Facebook" target="_blank">
+                    <img src="Images/social/facebook.png" alt="Follow us on Facebook" /></a></li>
+                <li><a href="#" title="Follow us on RSS">
+                    <img src="Images/social/rss.png" alt="Follow us on RSS" /></a></li>
+            </ul>
+        </div>
+        <!-- end centerContainer -->
+    </div>
+    <!-- end footerCopyrightContainer -->
+    <!-- Initialize Cufon -->
+    <script type="text/javascript">
+        Cufon.now();
+    </script>
+</body>
+</html>

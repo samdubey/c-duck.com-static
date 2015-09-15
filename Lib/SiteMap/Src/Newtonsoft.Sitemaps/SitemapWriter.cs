@@ -1,0 +1,345 @@
+#region License
+// Copyright (c) 2007 James Newton-King
+//
+// Permission is hereby granted, free of charge, to any person
+// obtaining a copy of this software and associated documentation
+// files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use,
+// copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following
+// conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+#endregion
+
+using System;
+using System.Web;
+using System.Xml;
+using System.Reflection;
+using System.Globalization;
+using Newtonsoft.Sitemaps.Utilities;
+
+namespace Newtonsoft.Sitemaps
+{
+  /// <summary>
+  /// Provides data for an event that is raised by calling the <see cref="SitemapWriter.WriteUrlValueElements"/>
+  /// property of the <see cref="SitemapWriter"/> class. 
+  /// </summary>
+  public class LastModifiedResolveEventArgs : EventArgs
+  {
+    private readonly SiteMapNode _siteMapNode;
+
+    /// <summary>
+    /// Gets the <see cref="SiteMapNode"/> being written.
+    /// </summary>
+    public SiteMapNode SiteMapNode
+    {
+      get { return _siteMapNode; }
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LastModifiedResolveEventArgs"/> class using the specified
+    /// <see cref="SiteMapNode"/> object. 
+    /// </summary>
+    /// <param name="siteMapNode"></param>
+    public LastModifiedResolveEventArgs(SiteMapNode siteMapNode)
+    {
+      _siteMapNode = siteMapNode;
+    }
+  }
+
+  /// <summary>
+  /// Represents the method that will handle the <see cref="SitemapWriter.LastModifiedResolve"/> event
+  /// of a specific instance of the <see cref="SitemapWriter"/> class.
+  /// </summary>
+  /// <param name="sender">The source of the event, an instance of the <see cref="SitemapWriter"/> class.</param>
+  /// <param name="e">A <see cref="LastModifiedResolveEventArgs"/> that contains the event data.</param>
+  /// <returns></returns>
+  public delegate DateTime? LastModifiedResolveEventHandler(object sender, LastModifiedResolveEventArgs e);
+
+  /// <summary>
+  /// Writes Google site map XML to the underlying stream.
+  /// </summary>
+  public class SitemapWriter : IDisposable
+  {
+    private readonly XmlWriter _writer;
+    private readonly string _siteHostUrl;
+
+    /// <summary>
+    /// Occurs when the <see cref="WriteUrlValueElements"/> method is called.
+    /// </summary>
+    public event LastModifiedResolveEventHandler LastModifiedResolve;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SitemapWriter"/> class using
+    /// the specified <see cref="XmlWriter"/> and site host URL.
+    /// </summary>
+    /// <param name="writer">The XmlWriter to write to.</param>
+    /// <param name="siteHostUrl">The site host appended to the beginning of non-rooted URLs.</param>
+    public SitemapWriter(XmlWriter writer, string siteHostUrl)
+    {
+      if (writer == null)
+        throw new ArgumentNullException("writer");
+
+      ParameterUtils.ValidateStringNotNullOrEmpty(siteHostUrl, "siteHostUrl");
+
+      if (siteHostUrl.IndexOf(':') == -1)
+        throw new ArgumentException("Invalid host url");
+
+      _writer = writer;
+      _siteHostUrl = siteHostUrl;
+    }
+
+    private DateTime? ResolveLastModifiedDate(SiteMapNode siteMapNode)
+    {
+      LastModifiedResolveEventHandler resolveHandler = LastModifiedResolve;
+
+      if (resolveHandler != null)
+      {
+        foreach (LastModifiedResolveEventHandler resolveDelegate in resolveHandler.GetInvocationList())
+        {
+          DateTime? lastModifiedDate = resolveDelegate(this, new LastModifiedResolveEventArgs(siteMapNode));
+
+          if (lastModifiedDate != null)
+            return lastModifiedDate;
+        }
+      }
+      return null;
+    }
+
+    /// <summary>
+    /// Writes Sitemap XML for the specified <see cref="SiteMapNode"/> and it's children.
+    /// </summary>
+    /// <param name="baseNode">The <see cref="SiteMapNode"/> to write Sitemap XML for.</param>
+    public void WriteSiteMap(SiteMapNode baseNode)
+    {
+      WriteStartRootElement();
+
+      Assembly googleSiteMapAssembly = Assembly.GetExecutingAssembly();
+
+      _writer.WriteComment(string.Format("Generated by {0}", AssemblyUtils.GetCompleteProductName(googleSiteMapAssembly)));
+
+      WriteUrlElements(SiteMap.RootNode);
+
+      WriteEndRootElement();
+    }
+
+    /// <summary>
+    /// Writes the Sitemap XML start root element and namespace.
+    /// </summary>
+    public void WriteStartRootElement()
+    {
+      _writer.WriteStartDocument();
+      _writer.WriteStartElement("urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+    }
+
+    /// <summary>
+    /// Writes the Sitemap XML end root element.
+    /// </summary>
+    public void WriteEndRootElement()
+    {
+      _writer.WriteEndElement();
+      _writer.WriteEndDocument();
+    }
+
+    /// <summary>
+    /// Writes Sitemap XML url element for the specified <see cref="SiteMapNode"/>.
+    /// </summary>
+    /// <param name="siteMapNode">The <see cref="SiteMapNode"/> to write a Sitemap XML url element for.</param>
+    public void WriteUrlElement(SiteMapNode siteMapNode)
+    {
+      WriteUrlElement(siteMapNode, false);
+    }
+
+    /// <summary>
+    /// Writes Sitemap XML url elements for the specified <see cref="SiteMapNode"/> and it's children.
+    /// </summary>
+    /// <param name="siteMapNode">The <see cref="SiteMapNode"/> to write a Sitemap XML url elements for.</param>
+    public void WriteUrlElements(SiteMapNode siteMapNode)
+    {
+      WriteUrlElement(siteMapNode, true);
+    }
+
+    /// <summary>
+    /// Writes Sitemap XML start url element.
+    /// </summary>
+    public void WriteStartUrlElement()
+    {
+      _writer.WriteStartElement("url");
+    }
+
+    /// <summary>
+    /// Writes Sitemap XML end url element.
+    /// </summary>
+    public void WriteEndUrlElement()
+    {
+      _writer.WriteEndElement();
+    }
+
+    /// <summary>
+    /// Writes Sitemap XML url value elements for the given <see cref="SiteMapNode"/>.
+    /// </summary>
+    /// <param name="siteMapNode">The <see cref="SiteMapNode"/> to write url value elements for.</param>
+    public void WriteUrlValueElements(SiteMapNode siteMapNode)
+    {
+      if (siteMapNode == null)
+        throw new ArgumentNullException("siteMapNode");
+
+      string nodeUrl = siteMapNode.Url;
+
+      if (UrlPath.IsRelativeUrl(nodeUrl))
+        throw new SitemapWriterException("Url cannot be relative", siteMapNode.Key);
+
+      if (UrlPath.IsValidVirtualPathWithoutProtocol(nodeUrl))
+        nodeUrl = _siteHostUrl + siteMapNode.Url;
+
+      //nodeUrl = VirtualPathUtility.GetDirectory(nodeUrl) + VirtualPathUtility.GetFileName(nodeUrl);
+
+      _writer.WriteElementString("loc", nodeUrl);
+
+      WriteDouble(_writer, "priority", siteMapNode);
+      WriteLastModifiedDate(_writer, siteMapNode);
+      WriteEnum<ChangeFrequency>(_writer, "changefreq", siteMapNode);
+    }
+
+    private void Dispose(bool disposing)
+    {
+      if (disposing)
+        Close();
+    }
+
+    /// <summary>
+    /// Overridden. Closes this stream and the underlying stream.
+    /// </summary>
+    public void Close()
+    {
+      _writer.Close();
+    }
+
+    /// <summary>
+    /// Overridden. Flushes whatever is in the buffer to the underlying streams and also flushes
+    /// the underlying stream.
+    /// </summary>
+    public void Flush()
+    {
+      _writer.Flush();
+    }
+
+    void IDisposable.Dispose()
+    {
+      Dispose(true);
+    }
+
+    private void WriteUrlElement(SiteMapNode siteMapNode, bool recurseWriteChildren)
+    {
+      string sitemapsIgnore = siteMapNode["sitemapsIgnore"];
+
+      if (string.IsNullOrEmpty(sitemapsIgnore) || !Convert.ToBoolean(sitemapsIgnore))
+      {
+        WriteStartUrlElement();
+
+        WriteUrlValueElements(siteMapNode);
+
+        WriteEndUrlElement();
+
+        if (recurseWriteChildren)
+        {
+          if (siteMapNode.HasChildNodes)
+          {
+            for (int i = 0; i < siteMapNode.ChildNodes.Count; i++)
+            {
+              WriteUrlElement(siteMapNode.ChildNodes[i], recurseWriteChildren);
+            }
+          }
+        }
+      }
+    }
+
+    private void WriteDouble(XmlWriter writer, string propertyName, SiteMapNode siteMapNode)
+    {
+      string propertyValue = siteMapNode[propertyName];
+
+      if (!string.IsNullOrEmpty(propertyValue))
+      {
+        double value;
+        try
+        {
+          value = Convert.ToDouble(propertyValue);
+        }
+        catch (Exception e)
+        {
+          throw new SitemapWriterException(string.Format("Error writing {0}: " + e.Message, propertyName), siteMapNode.Key, e);
+        }
+
+        if (value < 0.0 || value > 1.0)
+          throw new SitemapWriterException(string.Format("{0} must be between 0.0 and 1.0", propertyName), siteMapNode.Key);
+
+        value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
+
+        writer.WriteElementString(propertyName, value.ToString("0.0", CultureInfo.InvariantCulture));
+      }
+    }
+
+    private void WriteLastModifiedDate(XmlWriter writer, SiteMapNode siteMapNode)
+    {
+      // attempt to get date by looping through any attached date resolver events
+      // currently primarily used to get the file last modified date
+      DateTime? lastModifiedDate = ResolveLastModifiedDate(siteMapNode);
+
+      if (lastModifiedDate == null)
+      {
+        string lastmod = siteMapNode["lastmod"];
+
+        if (string.Compare(lastmod, "now", StringComparison.OrdinalIgnoreCase) == 0)
+        {
+          lastModifiedDate = DateTime.Now;
+        }
+        else if (!string.IsNullOrEmpty(lastmod))
+        {
+          try
+          {
+            lastModifiedDate = Convert.ToDateTime(lastmod);
+          }
+          catch (Exception e)
+          {
+            throw new SitemapWriterException(string.Format("Error writing {0}: " + e.Message, "lastmod"), siteMapNode.Key, e);
+          }
+        }
+      }
+
+      if (lastModifiedDate != null)
+        writer.WriteElementString("lastmod", lastModifiedDate.Value.ToString("yyyy-MM-ddTHH:mm:sszzzzzz", CultureInfo.InvariantCulture));
+    }
+
+    private void WriteEnum<T>(XmlWriter writer, string propertyName, SiteMapNode siteMapNode) where T : struct
+    {
+      string propertyValue = siteMapNode[propertyName];
+
+      if (!string.IsNullOrEmpty(propertyValue))
+      {
+        T value;
+        try
+        {
+          value = EnumUtils.Parse<T>(propertyValue);
+        }
+        catch (Exception e)
+        {
+          throw new SitemapWriterException(string.Format("Error writing {0}: " + e.Message, propertyName), siteMapNode.Key, e);
+        }
+
+        writer.WriteElementString(propertyName, value.ToString().ToLowerInvariant());
+      }
+    }
+  }
+}
